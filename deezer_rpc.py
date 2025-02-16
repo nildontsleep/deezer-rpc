@@ -100,7 +100,7 @@ def update_discord_presence(deezer_window):
 
             # only update if the title has changed
             if clean_title and clean_title != last_title:
-                rpc.update(details="🎧 listening to deezer", state=f"🎶 {clean_title}")
+                rpc.update(details="🎧 Listening to deezer", state=f"🎶 {clean_title}")
                 print(f" ┃ 🎧 updated discord presence: {clean_title}")
                 last_title = clean_title  # update last known title
 

@@ -6,7 +6,7 @@ import ctypes
 
 # constants
 discord_client_id = "1219930243205173298"
-
+version = "v0.0.2"
 # app initialization print
 def print_app_initialization():
     print(" ┃ 🪧 initializing app...")
@@ -28,7 +28,7 @@ def get_valid_deezer_windows():
 
         # ensure it contains "deezer" but isn't a file explorer, vs code, or web browser
         if "deezer" in title and not any(
-            x in title for x in ["explorer", "visual studio", "opera", "chrome", "firefox", "code"]
+            x in title for x in ["explorer", "visual studio", "opera", "chrome", "firefox", "code", version]
         ):
             valid_deezer_windows.append(window)
 
@@ -50,7 +50,7 @@ def prompt_user_for_window(windows):
 
     while True:
         try:
-            choice = int(input(" ┃ ➡ enter the number of your choice: ")) - 1
+            choice = int(input(" ┃ ➡  enter the number of your choice: ")) - 1
             if 0 <= choice < len(windows):
                 return windows[choice]
             else:
@@ -116,7 +116,7 @@ def main():
     """
 
     
-    ctypes.windll.kernel32.SetConsoleTitleW("Deezer RPC | v0.0.1")
+    ctypes.windll.kernel32.SetConsoleTitleW(f"Deezer RPC | {version}")
     print(" ┃ 🔍 searching for deezer windows...")
     deezer_windows = get_valid_deezer_windows()
 

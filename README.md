@@ -10,7 +10,7 @@ run   $  python °
 
 ---
 
-# 🎧 Deezer RPC | v0.0.1  
+# 🎧 Deezer RPC | v0.0.2
 
 **Deezer RPC** is a simple and lightweight Python application that updates your Discord Rich Presence with the song you're currently playing on **Deezer**. It detects the active **Deezer window** and syncs the track title in real time.  
 

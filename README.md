@@ -12,9 +12,9 @@ run   $  python °
 
 # 🎧 Deezer RPC | v0.0.2
 
-**Deezer RPC** is a simple and lightweight Python application that updates your Discord Rich Presence with the song you're currently playing on **Deezer**. It detects the active **Deezer window** and syncs the track title in real time.  
+**Deezer RPC** is a lightweight Python application that updates your Discord Rich Presence with the song you're currently playing on **Deezer**. It works by detecting the active **Deezer window** and syncing the track title in real time.  
 
-It has been done because I found no way to make [Yuuto's project](https://github.com/JustYuuto/deezer-discord-rpc) work but it was useful as it had the feature to display the name of song & artist as window title.
+I created this project because I couldn't get [Yuuto's project](https://github.com/JustYuuto/deezer-discord-rpc) to work. However, it was useful as it included a feature that displays the song title and artist as the window title.  
 
 ---
 

@@ -3,18 +3,18 @@
 ```bash
 
 github.com/nildontsleep/deezer-rpc
-dl    $  git clone ° 
-run   $  python °
+dl    $  git clone
+run   $  python
 
 ```
 
 ---
 
-# 🎧 Deezer RPC | v0.0.2
+# 🎧 Deezer RPC | v1
 
-**Deezer RPC** is a lightweight Python application that updates your Discord Rich Presence with the song you're currently playing on **Deezer**. It works by detecting the active **Deezer window** and syncing the track title in real time.  
+**Deezer RPC** is a lightweight Python application that updates your Discord Rich Presence with the song you're currently playing on **Deezer**. It works by detecting the active **Deezer window** and syncing the track title in real time.
 
-I created this project because I couldn't get [Yuuto's project](https://github.com/JustYuuto/deezer-discord-rpc) to work. However, it was useful as it included a feature that displays the song title and artist as the window title.  
+This project was created as an alternative to [Yuuto's project](https://github.com/JustYuuto/deezer-discord-rpc), which inspired the method of capturing song details via the window title.
 
 ---
 
@@ -37,6 +37,8 @@ I created this project because I couldn't get [Yuuto's project](https://github.c
 - **Auto-detects** active Deezer window 🔍  
 - **Manual selection** for multiple Deezer windows 🖥️  
 - **Real-time updates** for track changes ⏳  
+- **Error logging** for debugging 🛠️  
+- **Lightweight & fast** performance ⚡  
 
 ---
 
@@ -47,14 +49,19 @@ I created this project because I couldn't get [Yuuto's project](https://github.c
 Ensure you have the following installed:  
 
 - **Python 3.10** or later  
-- Required Python modules (`pip install pygetwindow pypresence ctypes`)
-- Deezer Discord RPC : https://github.com/JustYuuto/deezer-discord-rpc
+- Required Python modules:  
+  ```bash
+  pip install pygetwindow pypresence
+  ```
+- Deezer application must be open with a song playing  
 
 ### Clone the Repository  
 
 ```bash
+
 git clone https://github.com/nildontsleep/deezer-rpc.git
 cd deezer-rpc
+
 ```
 
 ### Run the Application  
@@ -62,6 +69,7 @@ cd deezer-rpc
 ```bash
 
 python deezer_rpc.py
+
 ```
 
 ---
@@ -74,11 +82,9 @@ Here’s a quick look at **Deezer RPC** in action!
 
 ![inDiscord](https://github.com/user-attachments/assets/5caaf4af-5955-46d9-b047-41195b5c0adc)
 
-
 ### 🖥️ Running in Terminal  
 
 ![term prev](https://github.com/user-attachments/assets/9c448013-3be9-4373-8c2b-d6367d7f8e69)
-
 
 ---
 
@@ -95,3 +101,4 @@ Contributions are welcome!
 ## 📄 License  
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).  
+

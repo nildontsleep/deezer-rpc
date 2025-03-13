@@ -47,7 +47,7 @@ I created this project because I couldn't get [Yuuto's project](https://github.c
 Ensure you have the following installed:  
 
 - **Python 3.10** or later  
-- Required Python modules (`pip install pygetwindow pypresence ctypes`)
+- Required Python modules (`pip install pygetwindow pypresence ctypes, requests`)
 - Deezer Discord RPC : https://github.com/JustYuuto/deezer-discord-rpc
 
 ### Clone the Repository  

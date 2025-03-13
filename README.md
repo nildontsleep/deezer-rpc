@@ -72,12 +72,13 @@ Here’s a quick look at **Deezer RPC** in action!
 
 ### 🎧 Discord Rich Presence  
 
-![inDiscord](https://github.com/user-attachments/assets/5caaf4af-5955-46d9-b047-41195b5c0adc)
+![image](https://github.com/user-attachments/assets/1acc6bfa-0ab7-4eb9-be21-fd43fe28c882)
 
 
 ### 🖥️ Running in Terminal  
 
-![term prev](https://github.com/user-attachments/assets/9c448013-3be9-4373-8c2b-d6367d7f8e69)
+![image](https://github.com/user-attachments/assets/ee4d4f86-a328-4fd7-b731-44143cf80ee8)
+
 
 
 ---

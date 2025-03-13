@@ -1,18 +1,10 @@
-<img align="left" src="https://github.com/user-attachments/assets/00200b64-76f6-47ec-93d0-71277f99c12d" width="150"/>
-
-```bash
-
-github.com/nildontsleep/deezer-rpc
-dl    $  git clone
-run   $  python
-
-```
+Here’s the updated README for version 2 of your **Deezer RPC**:
 
 ---
 
-# 🎧 Deezer RPC | v1
+# 🎧 Deezer RPC | v2
 
-**Deezer RPC** is a lightweight Python application that updates your Discord Rich Presence with the song you're currently playing on **Deezer**. It works by detecting the active **Deezer window** and syncing the track title in real time.
+**Deezer RPC** is a lightweight Python application that updates your Discord Rich Presence with the song you're currently playing on **Deezer**. It works by detecting the active **Deezer window** and syncing the track title in real-time, enhancing your Discord status with detailed song info.
 
 This project was created as an alternative to [Yuuto's project](https://github.com/JustYuuto/deezer-discord-rpc), which inspired the method of capturing song details via the window title.
 
@@ -34,10 +26,10 @@ This project was created as an alternative to [Yuuto's project](https://github.c
 ## ✨ Features  
 
 - **Discord Rich Presence** integration for **Deezer** 🎶  
-- **Auto-detects** active Deezer window 🔍  
-- **Manual selection** for multiple Deezer windows 🖥️  
-- **Real-time updates** for track changes ⏳  
-- **Error logging** for debugging 🛠️  
+- **Auto-detects** active Deezer window or lets you manually select from multiple windows 🔍  
+- **Real-time track and artist updates** with album cover and artist image ⏳  
+- **Error logging** for better debugging 🛠️  
+- **Improved window detection** that matches variations of Deezer window titles  
 - **Lightweight & fast** performance ⚡  
 
 ---
@@ -51,25 +43,21 @@ Ensure you have the following installed:
 - **Python 3.10** or later  
 - Required Python modules:  
   ```bash
-  pip install pygetwindow pypresence
+  pip install pygetwindow pypresence requests
   ```
-- Deezer application must be open with a song playing  
+- **Deezer application** must be open with a song playing  
 
 ### Clone the Repository  
 
 ```bash
-
 git clone https://github.com/nildontsleep/deezer-rpc.git
 cd deezer-rpc
-
 ```
 
 ### Run the Application  
 
 ```bash
-
 python deezer_rpc.py
-
 ```
 
 ---
@@ -100,5 +88,10 @@ Contributions are welcome!
 
 ## 📄 License  
 
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).  
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
+--- 
+
+### Key Updates in v2:
+- **Mode Selection:** Users can now choose between **auto-detect** and **manual window selection** for greater flexibility in detecting Deezer windows.
+- **Improved Logging and Error Handling:** Detailed logs are now recorded for troubleshooting and monitoring.

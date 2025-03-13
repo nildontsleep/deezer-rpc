@@ -3,13 +3,15 @@ import time
 import re
 import logging
 import ctypes
+import requests
 from pypresence import Presence
 
 # Configuration & Constants
 DISCORD_CLIENT_ID = "1219930243205173298"
-VERSION = "v1"
+VERSION = "v2"
+DEEZER_API_SEARCH_URL = "https://api.deezer.com/search?q="
 
-# Configure logging to store logs in a file
+# Configure logging
 logging.basicConfig(
     filename="deezer_rpc.log",
     level=logging.INFO,
@@ -27,20 +29,14 @@ ctypes.windll.kernel32.SetConsoleTitleW(f"Deezer RPC | {VERSION}")
 time.sleep(1)
 
 # Window Detection Functions
-
 def get_valid_deezer_windows():
     """Finds and filters valid Deezer application windows."""
     logging.info("Searching for Deezer windows...")
     all_windows = gw.getWindowsWithTitle("")
-    valid_deezer_windows = []
-
-    for window in all_windows:
-        title = window.title.lower()
-        if "deezer" in title and not any(
-            x in title for x in ["explorer", "visual studio", "opera", "chrome", "firefox", "code", VERSION]
-        ):
-            valid_deezer_windows.append(window)
     
+    # Improved detection (matches variations of Deezer window titles)
+    valid_deezer_windows = [w for w in all_windows if "deezer" in w.title.lower() and " - " in w.title]
+
     logging.info(f"Found {len(valid_deezer_windows)} valid Deezer window(s)")
     return valid_deezer_windows
 
@@ -49,7 +45,7 @@ def prompt_user_for_window(windows):
     print("\n ┃ 🔍 Multiple valid Deezer windows detected. Please select one:")
     for idx, window in enumerate(windows):
         print(f" ┃ [{idx + 1}] {window.title}")
-    
+
     while True:
         try:
             choice = int(input(" ┃ ➡  Enter the number of your choice: ")) - 1
@@ -59,19 +55,43 @@ def prompt_user_for_window(windows):
         except ValueError:
             print(" ┃ ⚠️ Invalid input. Please enter a number.")
 
-# Title Formatting Function
-
-def format_deezer_title(raw_title: str) -> str:
-    """Cleans and formats the track title from the Deezer window."""
+def format_deezer_title(raw_title: str) -> tuple:
+    """Extracts song title and artist from the window title."""
     title_parts = raw_title.split(" - ")
-    formatted_title = (" - ".join(title_parts[:-1]) if len(title_parts) > 1 else raw_title)
-    formatted_title = re.sub(r"\{.*?\}", "", formatted_title).strip()
-    return formatted_title
+    
+    if len(title_parts) >= 2:
+        song_title = title_parts[0].strip()
+        artist_name = title_parts[1].strip()
+    else:
+        song_title, artist_name = raw_title, "Unknown"
+
+    return song_title, artist_name
+
+# Deezer API Fetch Function
+def get_song_info(song_title: str, artist_name: str):
+    """Fetches song details (cover, artist image, and song link) from Deezer API."""
+    query = f"{artist_name} {song_title}"
+    
+    try:
+        response = requests.get(DEEZER_API_SEARCH_URL + query)
+        response.raise_for_status()
+        data = response.json()
+
+        if data["data"]:
+            song = data["data"][0]
+            return {
+                "album_cover": song["album"]["cover_medium"],  # 250x250 px cover
+                "artist_image": song["artist"]["picture_small"],  # Small artist image
+                "song_link": song["link"]  # Direct song URL
+            }
+    except requests.RequestException as e:
+        logging.error(f"Failed to fetch song info: {e}")
+
+    return None  # Fallback to default values if API fails
 
 # Discord Presence Function
-
 def update_discord_presence(deezer_window):
-    """Updates Discord Rich Presence with current Deezer track information."""
+    """Updates Discord Rich Presence with current Deezer track and album cover."""
     try:
         rpc = Presence(DISCORD_CLIENT_ID)
         rpc.connect()
@@ -83,25 +103,43 @@ def update_discord_presence(deezer_window):
         return
 
     last_title = None
+
     while True:
         try:
             window_title = deezer_window.title
-            clean_title = format_deezer_title(window_title)
-            
-            if clean_title and clean_title != last_title:
-                rpc.update(details="🎧 Listening to Deezer", state=f"🎶 {clean_title}")
-                logging.info(f"Updated Discord presence: {clean_title}")
-                print(f" ┃ 🎧 Updated Discord presence: {clean_title}")
-                last_title = clean_title
-            
-            time.sleep(1)  # Prevent excessive calls
+            song_title, artist_name = format_deezer_title(window_title)
+
+            if song_title and song_title != last_title:
+                song_info = get_song_info(song_title, artist_name)
+
+                if song_info:
+                    cover_url = song_info["album_cover"]
+                    artist_url = song_info["artist_image"]
+                    song_link = song_info["song_link"]
+                    rpc.update(
+                        details=f"🎧 Listening to {song_title}",
+                        state=f"🎤 {artist_name}",
+                        large_image=cover_url,
+                        large_text="Deezer",
+                        small_image=artist_url,
+                        small_text=artist_name,
+                        buttons=[
+                            {"label": "🎵 Listen on Deezer", "url": song_link}  # Deezer track link
+                        ]
+                    )
+
+                    logging.info(f"Updated Discord: {song_title} by {artist_name}")
+                    print(f" ┃ 🎧 Updated Discord: {song_title} by {artist_name}")
+
+                last_title = song_title
+
+            time.sleep(1)
         except Exception as error:
             logging.error(f"Error updating Discord presence: {error}")
             print(f" ┃ ❌ Error updating Discord presence: {error}")
             break
 
 # Main Execution Function
-
 def main():
     """Main function to initialize window detection and update Discord presence."""
     ctypes.windll.kernel32.SetConsoleTitleW(f"Deezer RPC | {VERSION}")
@@ -119,20 +157,19 @@ def main():
         if mode_choice in ['a', 'm']:
             break
         print(" ┃ ⚠️ Invalid choice. Please enter 'A' or 'M'.")
-    
+
     if mode_choice == 'a':
         print(" ┃ 🚀 Auto-detect mode selected. Using first detected Deezer window.")
         selected_window = deezer_windows[0]
     else:
         selected_window = prompt_user_for_window(deezer_windows)
-    
+
     print(f" ┃ 🎶 Using window: {selected_window.title}")
     logging.info(f"Using Deezer window: {selected_window.title}")
-    
+
     update_discord_presence(selected_window)
 
 # Program Entry Point
-
 if __name__ == "__main__":
     print_app_initialization()
     main()

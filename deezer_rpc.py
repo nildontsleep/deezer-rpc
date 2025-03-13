@@ -6,7 +6,7 @@ import ctypes
 import requests
 from pypresence import Presence
 
-DISCORD_CLIENT_ID = "1219930243205173298"
+DISCORD_CLIENT_ID = "CLIENT_ID"
 VERSION = "v2"
 DEEZER_API_SEARCH_URL = "https://api.deezer.com/search?q="
 

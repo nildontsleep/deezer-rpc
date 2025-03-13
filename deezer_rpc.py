@@ -116,6 +116,7 @@ def update_discord_presence(deezer_window):
                     cover_url = song_info["album_cover"]
                     artist_url = song_info["artist_image"]
                     song_link = song_info["song_link"]
+                
                     rpc.update(
                         details=f"🎧 Listening to {song_title}",
                         state=f"🎤 {artist_name}",
